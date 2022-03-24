@@ -60,6 +60,9 @@ export const SubTitle = styled.p`
   opacity: 0.56;
   margin-top: 1rem;
   line-height: 1.5rem;
+  @media only screen and (max-width: ${BREAKPOINTS.sm}) {
+    font-size: 0.9rem;
+  }
 `;
 
 export const Button = styled.button`
