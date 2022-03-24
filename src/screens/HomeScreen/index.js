@@ -4,6 +4,7 @@ import {
   Container,
   SubTitle,
   Title,
+  MTitle,
   Img,
   Content,
   Row,
@@ -13,6 +14,12 @@ import HomeImg from "assets/home.png";
 const HomeScreen = () => {
   return (
     <Container>
+      <MTitle>
+        <p>
+          The modern way to
+          <br /> make Advertisements
+        </p>
+      </MTitle>
       <Row>
         <Content>
           <Title>
