@@ -61,7 +61,18 @@ export const SubTitle = styled.p`
   margin-top: 1rem;
   line-height: 1.5rem;
   @media only screen and (max-width: ${BREAKPOINTS.sm}) {
-    font-size: 0.9rem;
+    display: none;
+  }
+`;
+
+export const SSubTitle = styled.p`
+  color: #121127;
+  opacity: 0.56;
+  margin-top: 1rem;
+  line-height: 1.5rem;
+  font-size: 0.9rem;
+  @media only screen and (min-width: ${BREAKPOINTS.sm}) {
+    display: none;
   }
 `;
 

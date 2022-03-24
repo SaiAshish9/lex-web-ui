@@ -3,6 +3,7 @@ import {
   Button,
   Container,
   SubTitle,
+  SSubTitle,
   Title,
   MTitle,
   Img,
@@ -30,6 +31,10 @@ const HomeScreen = () => {
             Short Deep Fake Video Generation from words
             <br /> in two simple steps!
           </SubTitle>
+          <SSubTitle>
+            Short Deep Fake Video Generation from words
+            <br /> in two simple steps!
+          </SSubTitle>
           <Button>Get Started</Button>
         </Content>
         <Img alt="img" src={HomeImg} />
