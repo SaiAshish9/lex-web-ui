@@ -11,8 +11,10 @@ import {
   Row,
 } from "./styles";
 import HomeImg from "assets/home.png";
+import { useNavigate } from "react-router-dom";
 
 const HomeScreen = () => {
+  const navigate = useNavigate();
   return (
     <Container>
       <MTitle>
@@ -35,7 +37,7 @@ const HomeScreen = () => {
             Short Deep Fake Video Generation from words
             <br /> in two simple steps!
           </SSubTitle>
-          <Button>Get Started</Button>
+          <Button onClick={() => navigate("/steps/1")}>Get Started</Button>
         </Content>
         <Img alt="img" src={HomeImg} />
       </Row>
