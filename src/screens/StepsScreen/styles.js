@@ -123,7 +123,7 @@ export const TextArea = styled.textarea`
   opacity: 0.7;
   ::placeholder {
     color: #121127;
-    opacity: 0.32;
+    opacity: 0.5;
   }
   ::-webkit-scrollbar {
     display: none;

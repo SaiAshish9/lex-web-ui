@@ -7,7 +7,9 @@ const genericStyles = css`
     overflow-x: hidden !important;
     font-family: ${FontFamily.inter} !important;
   }
-  button {
+  button,
+  textarea,
+  input {
     font-family: ${FontFamily.inter} !important;
   }
   p {
