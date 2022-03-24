@@ -50,7 +50,7 @@ export const MTitle = styled.div`
     display: none;
   }
   @media only screen and (max-width: ${BREAKPOINTS.xs}) {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     ${Styles.RBC};
   }
 `;
