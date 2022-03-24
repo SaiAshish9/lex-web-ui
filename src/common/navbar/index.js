@@ -6,7 +6,7 @@ import { goTo } from "utils";
 const Navbar = () => {
   return (
     <Container>
-      <Img alt="img" src={NavLogo} />
+      <Img onClick={() => goTo("/")} alt="img" src={NavLogo} />
       <NavButton onClick={() => goTo("https://github.com")}>Github</NavButton>
     </Container>
   );

@@ -12,6 +12,7 @@ export const Container = styled.div`
 
 export const Img = styled.img`
   height: 2rem;
+  cursor: pointer;
 `;
 
 export const NavButton = styled.button`
