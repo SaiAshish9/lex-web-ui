@@ -74,6 +74,7 @@ export const Button = styled.button`
   @media only screen and (max-width: ${BREAKPOINTS.lg}) {
     margin-top: 1.8rem;
     width: 22rem;
+    width: 100%;
   }
 `;
 
