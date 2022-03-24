@@ -1,13 +1,13 @@
-## Website Link
-
-```
-https://lex-web-ui.vercel.app/
-```
-
 ## GP3 Sandbox Link
 
 ```
 https://github.com/SaiAshish9/gpt3-sandbox
+```
+
+## Website Link
+
+```
+https://lex-web-ui.vercel.app/
 ```
 
 ## Installation Steps
