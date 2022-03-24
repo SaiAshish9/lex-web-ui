@@ -1,5 +1,5 @@
 const FontFamily = {
-  poppins: "Poppins",
+  inter: "Inter",
 };
 
 export default FontFamily;
