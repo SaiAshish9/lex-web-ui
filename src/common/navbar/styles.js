@@ -4,10 +4,12 @@ import { Styles, FontWeight, FontFamily } from "constants/index";
 export const Container = styled.div`
   width: 86vw;
   position: fixed;
-  padding: 1rem 0;
+  padding: 1.2rem 0;
   font-family: "Inter", sans-serif !important;
   margin: 0 7vw;
-  ${Styles.RBC}
+  background: #fff;
+  top: 0;
+  ${Styles.RBC};
 `;
 
 export const Img = styled.img`
