@@ -91,4 +91,46 @@ export const Step1Label = styled.p`
   color: #6a86da;
   font-weight: ${FontWeight.semiBold};
   margin: 1.8rem 0 1rem;
+  @media only screen and (max-width: ${BREAKPOINTS.lg}) {
+    margin: 1.8rem 0 0.4rem;
+  }
+`;
+
+export const TextInput = styled.input`
+  margin: 0px;
+  font-size: 1rem;
+  border: 1px solid #dadada;
+  padding: 1.2rem 1.5rem;
+  font-weight: ${FontWeight.light};
+  color: #121127;
+  opacity: 0.7;
+  ::placeholder {
+    color: #121127;
+    opacity: 0.5;
+  }
+`;
+
+export const TextArea = styled.textarea`
+  margin: 0px;
+  font-size: 1rem;
+  border: 1px solid #dadada;
+  padding: 1.2rem 1.5rem;
+  margin: 1.5rem 0;
+  resize: none;
+  line-height: 1.8rem;
+  font-weight: ${FontWeight.light};
+  color: #121127;
+  opacity: 0.7;
+  ::placeholder {
+    color: #121127;
+    opacity: 0.32;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const Step3Cont = styled.div`
+  display: flex;
+  flex-direction: column;
 `;

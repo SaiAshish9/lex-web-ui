@@ -13,6 +13,9 @@ import {
   HighlightImgContainer,
   DownloadImgCont,
   Step1Label,
+  TextInput,
+  Step3Cont,
+  TextArea,
 } from "./styles";
 import { useParams, useNavigate } from "react-router-dom";
 import GoBackImg from "assets/back.png";
@@ -73,12 +76,17 @@ const StepsScreen = () => {
 
   function Step1Container() {
     return (
-      <>
+      <Step3Cont>
+        <TextInput placeholder="Write a 30 second long ad for Giani’s ice cream" />
         <Button>Create Content</Button>
         <Step1Label>
           Want to change the Content? Feel free to edit it below!
         </Step1Label>
-      </>
+        <TextArea
+          rows="5"
+          defaultValue="Giani's ice cream is the perfect way to cool down on a hot summer day. With a wide variety of flavours to choose from, there's something for everyone to enjoy. Giani's also has a variety of toppings and mix-ins to make your ice cream sundae even more appealing"
+        />
+      </Step3Cont>
     );
   }
 
