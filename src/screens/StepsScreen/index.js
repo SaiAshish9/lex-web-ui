@@ -12,6 +12,7 @@ import {
   Step2ImgContainer,
   HighlightImgContainer,
   DownloadImgCont,
+  Step1Label,
 } from "./styles";
 import { useParams, useNavigate } from "react-router-dom";
 import GoBackImg from "assets/back.png";
@@ -21,6 +22,7 @@ import StepLImg from "assets/step2L.png";
 import StepRImg from "assets/step2R.png";
 import Step3ImgC from "assets/step3.png";
 import HighlightImg from "assets/highlight.png";
+import { Button } from "screens/HomeScreen/styles";
 
 const StepsScreen = () => {
   let { id } = useParams();
@@ -69,15 +71,30 @@ const StepsScreen = () => {
     );
   }
 
+  function Step1Container() {
+    return (
+      <>
+        <Button>Create Content</Button>
+        <Step1Label>
+          Want to change the Content? Feel free to edit it below!
+        </Step1Label>
+      </>
+    );
+  }
+
   return (
     <Container>
       <Step>STEP {id}</Step>
       <Title>{title[(id ?? 1) - 1]}</Title>
+      {id === 1 && <Step1Container />}
       {id === 2 && <ImgContainer />}
       {id === 3 && <Step3Container />}
       <NavigationCont>
         <Img src={GoBackImg} alt="img" onClick={() => handleClick("b")} />
-        {(id !== 3 || (id === 2 && selected !== -1)) && (
+        {id === 1 && (
+          <Img src={ProceedImg} alt="img" onClick={() => handleClick("p")} />
+        )}
+        {id === 2 && selected !== -1 && (
           <Img src={ProceedImg} alt="img" onClick={() => handleClick("p")} />
         )}
         {id === 3 && (

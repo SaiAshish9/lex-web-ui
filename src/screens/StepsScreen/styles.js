@@ -86,3 +86,9 @@ export const DownloadImgCont = styled.img`
     width: 6.3rem;
   }
 `;
+
+export const Step1Label = styled.p`
+  color: #6a86da;
+  font-weight: ${FontWeight.semiBold};
+  margin: 1.8rem 0 1rem;
+`;
