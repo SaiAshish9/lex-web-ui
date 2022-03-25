@@ -7,7 +7,7 @@ https://github.com/SaiAshish9/gpt3-sandbox
 ## Website Link
 
 ```
-https://lex-web-ui.vercel.app/
+https://lex-ads.vercel.app/
 ```
 
 ## Installation Steps
