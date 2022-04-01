@@ -1,4 +1,4 @@
-import React, { useState,useRef } from "react";
+import React, { useState, useRef } from "react";
 import {
   Container,
   Img,
@@ -34,7 +34,8 @@ const StepsScreen = () => {
 
   const [selected, setSelected] = useState(-1);
   const inputText = useRef();
-  const [outputText, setOutputText] = useState();
+  const [outputText, setOutputText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   function handleClick(type) {
     if (id === 1) navigate("/");
@@ -43,18 +44,40 @@ const StepsScreen = () => {
     if (type === "d") return;
   }
 
-  function handleSubmit(e){
+  function handleSubmit(e) {
     console.log(inputText.current.value);
-    const API_KEY = "";
+    setLoading(true);
+    const API_KEY = "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";
     const engine = "text-davinci-002";
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
-      body: JSON.stringify({prompt: inputText.current.value, temperature: 0, max_tokens: 60, top_p:1, n:1, stream:false})
-  };
-  fetch(`https://api.openai.com/v1/engines/${engine}/completions`, requestOptions)
-      .then(response => response.json())
-      .then(data => {console.log(data.choices[0].text);setOutputText(data.choices[0].text);});
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${API_KEY}`,
+      },
+      body: JSON.stringify({
+        prompt: inputText.current.value,
+        temperature: 0,
+        max_tokens: 60,
+        top_p: 1,
+        n: 1,
+        stream: false,
+      }),
+    };
+    fetch(
+      `https://api.openai.com/v1/engines/${engine}/completions`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.choices[0].text);
+        setOutputText(data.choices[0].text);
+        setLoading(false);
+      })
+      .catch((e) => {
+        console.log(e);
+        setLoading(false);
+      });
   }
 
   const title = [
@@ -93,16 +116,21 @@ const StepsScreen = () => {
   function Step1Container() {
     return (
       <Step3Cont>
-        <TextInput placeholder="Write a 30 second long ad for Giani’s ice cream" 
-        ref={inputText}/>
-        <Button onClick={handleSubmit}>Create Content</Button>
+        <TextInput
+          placeholder="Write a 30 second long ad for Giani’s ice cream"
+          ref={inputText}
+        />
+        <Button loading={loading} onClick={handleSubmit}>
+          {loading ? "Loading..." : "Create Content"}
+        </Button>
         <Step1Label>
           Want to change the Content? Feel free to edit it below!
         </Step1Label>
         <TextArea
+          loading={loading}
           rows="5"
-          defaultValue="Giani's ice cream is the perfect way to cool down on a hot summer day. With a wide variety of flavours to choose from, there's something for everyone to enjoy. Giani's also has a variety of toppings and mix-ins to make your ice cream sundae even more appealing"
           value={outputText}
+          onChange={() => setOutputText(e.target.value)}
         />
       </Step3Cont>
     );

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { FontWeight, Styles, BREAKPOINTS } from "constants/index";
 
 export const Container = styled.div`
@@ -76,23 +76,29 @@ export const SSubTitle = styled.p`
   }
 `;
 
-export const Button = styled.button`
-  ${Styles.HideBorder};
-  width: 20.7rem;
-  cursor: pointer;
-  margin-top: 2.4rem;
-  border-radius: 0.4rem;
-  background: #444bd3;
-  color: #fff;
-  padding: 0.8rem 0;
-  @media only screen and (max-width: ${BREAKPOINTS.lg}) {
-    margin-top: 1.8rem;
-    width: 22rem;
-  }
-  @media only screen and (max-width: ${BREAKPOINTS.xs}) {
-    width: 100%;
-  }
-`;
+export const Button = styled.button(
+  ({ loading }) => css`
+    ${Styles.HideBorder};
+    width: 20.7rem;
+    cursor: pointer;
+    margin-top: 2.4rem;
+    border-radius: 0.4rem;
+    background: #444bd3;
+    color: #fff;
+    padding: 0.8rem 0;
+    ${loading &&
+    css`
+      opacity: 0.5;
+    `}
+    @media only screen and (max-width: ${BREAKPOINTS.lg}) {
+      margin-top: 1.8rem;
+      width: 22rem;
+    }
+    @media only screen and (max-width: ${BREAKPOINTS.xs}) {
+      width: 100%;
+    }
+  `
+);
 
 export const Img = styled.img`
   width: 40%;
