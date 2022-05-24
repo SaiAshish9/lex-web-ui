@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Container,
   Img,
@@ -16,6 +16,8 @@ import {
   TextInput,
   Step3Cont,
   TextArea,
+  SpinnerImgCont,
+  VideoCont,
 } from "./styles";
 import { useParams, useNavigate } from "react-router-dom";
 import GoBackImg from "assets/back.png";
@@ -24,8 +26,11 @@ import DownloadImg from "assets/download.png";
 import StepLImg from "assets/step2L.png";
 import StepRImg from "assets/step2R.png";
 import Step3ImgC from "assets/step3.png";
+import SpinnerImg from "assets/spinner.gif";
 import HighlightImg from "assets/highlight.png";
 import { Button } from "screens/HomeScreen/styles";
+
+import VideoSrc from "assets/video.mp4";
 
 const StepsScreen = () => {
   let { id } = useParams();
@@ -68,9 +73,24 @@ const StepsScreen = () => {
   }
 
   function Step3Container() {
+    const [videoLoading, setVideoLoading] = useState(true);
+
+    useEffect(() => {
+      const interval = setTimeout(() => {
+        setVideoLoading((l) => !l);
+      }, 4000);
+      return () => clearTimeout(interval);
+    }, []);
+
     return (
       <Step3ImgCont>
-        <Step3Img alt="img" src={Step3ImgC} />
+        {videoLoading ? (
+          <SpinnerImgCont src={SpinnerImg} alt="img" />
+        ) : (
+          <VideoCont height="100%" width="100%" autoPlay loop muted={false}>
+            <source src={VideoSrc} type="video/mp4" />
+          </VideoCont>
+        )}
       </Step3ImgCont>
     );
   }
@@ -107,7 +127,7 @@ const StepsScreen = () => {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.choices[0].text,outputRef);
+          console.log(data.choices[0].text, outputRef);
           outputRef.current.value = data.choices[0].text;
           setLoading(false);
         })

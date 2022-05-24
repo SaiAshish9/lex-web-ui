@@ -26,6 +26,11 @@ export const HighlightImgContainer = styled.img`
   top: 0;
 `;
 
+export const SpinnerImgCont = styled.img`
+  width: 4rem;
+  height: 4rem;
+`;
+
 export const Step3Img = styled.img`
   width: 60%;
   @media only screen and (max-width: ${BREAKPOINTS.lg}) {
@@ -35,8 +40,22 @@ export const Step3Img = styled.img`
 
 export const Step3ImgCont = styled.div`
   ${Styles.RCC};
-  width: 100%;
+  width: 60%;
   margin: 1rem auto;
+  background: #000;
+  height: 50vh;
+  border-radius: 2rem;
+  padding: 0px;
+  overflow: hidden;
+  @media only screen and (max-width: ${BREAKPOINTS.lg}) {
+    width: 100%;
+  }
+`;
+
+export const VideoCont = styled.video`
+  width: 100%;
+  object-fit: cover;
+  height: 50vh;
 `;
 
 export const Row = styled.div`
