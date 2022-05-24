@@ -25,7 +25,6 @@ import ProceedImg from "assets/proceed.png";
 import DownloadImg from "assets/download.png";
 import StepLImg from "assets/step2L.png";
 import StepRImg from "assets/step2R.png";
-import Step3ImgC from "assets/step3.png";
 import SpinnerImg from "assets/spinner.gif";
 import HighlightImg from "assets/highlight.png";
 import { Button } from "screens/HomeScreen/styles";
@@ -87,7 +86,7 @@ const StepsScreen = () => {
         {videoLoading ? (
           <SpinnerImgCont src={SpinnerImg} alt="img" />
         ) : (
-          <VideoCont height="100%" width="100%" autoPlay loop muted={false}>
+          <VideoCont height="100%" width="100%" autoPlay muted={false}>
             <source src={VideoSrc} type="video/mp4" />
           </VideoCont>
         )}
