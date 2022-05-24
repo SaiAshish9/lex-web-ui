@@ -130,7 +130,7 @@ export const TextArea = styled.textarea`
   }
 `;
 
-export const Step3Cont = styled.div`
+export const Step3Cont = styled.form`
   display: flex;
   flex-direction: column;
 `;

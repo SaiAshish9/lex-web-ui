@@ -33,8 +33,6 @@ const StepsScreen = () => {
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState(-1);
-  const inputText = useRef();
-  const [outputText, setOutputText] = useState("");
   const [loading, setLoading] = useState(false);
 
   function handleClick(type) {
@@ -42,42 +40,6 @@ const StepsScreen = () => {
     if (type === "b" && id > 1) navigate("/steps/" + (id - 1));
     if (type === "p" && id < 3) navigate("/steps/" + (id + 1));
     if (type === "d") return;
-  }
-
-  function handleSubmit(e) {
-    console.log(inputText.current.value);
-    setLoading(true);
-    const API_KEY = "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";
-    const engine = "text-davinci-002";
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${API_KEY}`,
-      },
-      body: JSON.stringify({
-        prompt: inputText.current.value,
-        temperature: 0,
-        max_tokens: 60,
-        top_p: 1,
-        n: 1,
-        stream: false,
-      }),
-    };
-    fetch(
-      `https://api.openai.com/v1/engines/${engine}/completions`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.choices[0].text);
-        setOutputText(data.choices[0].text);
-        setLoading(false);
-      })
-      .catch((e) => {
-        console.log(e);
-        setLoading(false);
-      });
   }
 
   const title = [
@@ -114,11 +76,52 @@ const StepsScreen = () => {
   }
 
   function Step1Container() {
+    const inputRef = useRef();
+    const outputRef = useRef();
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log(inputRef.current.value);
+      setLoading(true);
+      const API_KEY = "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";
+      const engine = "text-davinci-002";
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${API_KEY}`,
+        },
+        body: JSON.stringify({
+          prompt: inputRef.current.value,
+          temperature: 0,
+          max_tokens: 60,
+          top_p: 1,
+          n: 1,
+          stream: false,
+        }),
+      };
+      fetch(
+        `https://api.openai.com/v1/engines/${engine}/completions`,
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.choices[0].text,outputRef);
+          outputRef.current.value = data.choices[0].text;
+          setLoading(false);
+        })
+        .catch((e) => {
+          console.log(e);
+          setLoading(false);
+        });
+    }
+
     return (
       <Step3Cont>
         <TextInput
           placeholder="Write a 30 second long ad for Giani’s ice cream"
-          ref={inputText}
+          ref={inputRef}
         />
         <Button loading={loading} onClick={handleSubmit}>
           {loading ? "Loading..." : "Create Content"}
@@ -126,12 +129,7 @@ const StepsScreen = () => {
         <Step1Label>
           Want to change the Content? Feel free to edit it below!
         </Step1Label>
-        <TextArea
-          loading={loading}
-          rows="5"
-          value={outputText}
-          onChange={() => setOutputText(e.target.value)}
-        />
+        <TextArea loading={loading} rows="5" ref={outputRef} />
       </Step3Cont>
     );
   }
@@ -141,17 +139,17 @@ const StepsScreen = () => {
       <Step>STEP {id}</Step>
       <Title>{title[(id ?? 1) - 1]}</Title>
       {id === 1 && <Step1Container />}
-      {id === 2 && <ImgContainer />}
-      {id === 3 && <Step3Container />}
+      {/* {id === 2 && <ImgContainer />} */}
+      {id === 2 && <Step3Container />}
       <NavigationCont>
         <Img src={GoBackImg} alt="img" onClick={() => handleClick("b")} />
         {id === 1 && (
           <Img src={ProceedImg} alt="img" onClick={() => handleClick("p")} />
         )}
-        {id === 2 && selected !== -1 && (
+        {/* {id === 2 && selected !== -1 && (
           <Img src={ProceedImg} alt="img" onClick={() => handleClick("p")} />
-        )}
-        {id === 3 && (
+        )} */}
+        {id === 2 && (
           <DownloadImgCont
             src={DownloadImg}
             alt="img"
