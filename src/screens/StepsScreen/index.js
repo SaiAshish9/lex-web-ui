@@ -32,7 +32,70 @@ import { Button } from "screens/HomeScreen/styles";
 
 import VideoSrc from "assets/result_voice.mp4";
 
-const API_URL = "http://4f68-35-247-29-231.ngrok.io/";
+const API_URL = "http://0354-35-247-29-231.ngrok.io/";
+
+function Step1Container({loading, setTopic, setLoading}) {
+  const inputRef = useRef();
+  const outputRef = useRef();
+  const [res, setRes] = useState();
+  const [outputTest, setOutputTest] = useState('');
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(inputRef.current.value);
+    setTopic(inputRef.current.value);
+    setLoading(true);
+    const API_KEY = "";
+    const engine = "text-davinci-002";
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${API_KEY}`,
+      },
+      body: JSON.stringify({
+        prompt: inputRef.current.value,
+        temperature: 0,
+        max_tokens: 60,
+        top_p: 1,
+        n: 1,
+        stream: false,
+      }),
+    };
+    fetch(
+      `https://api.openai.com/v1/engines/${engine}/completions`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.choices[0].text, outputRef);
+        setOutputTest(data.choices[0].text);
+        setRes(data.choices[0].text);
+        setLoading(false);
+      })
+      .catch((e) => {
+        console.log(e);
+        setLoading(false);
+      });
+  }
+
+  return (
+    <Step3Cont>
+      <TextInput
+        placeholder="Write a 30 second long ad for Giani’s ice cream"
+        ref={inputRef}
+      />
+      <Button loading={loading} onClick={handleSubmit}>
+        {loading ? "Loading..." : "Create Content"}
+      </Button>
+      <Step1Label>
+        Want to change the Content? Feel free to edit it below!
+      </Step1Label>
+      <TextArea loading={loading} rows="5" value={outputTest} onChange={(v)=>setOutputTest(v)}/>
+    </Step3Cont>
+  );
+}
 
 const StepsScreen = () => {
   let { id } = useParams();
@@ -42,7 +105,6 @@ const StepsScreen = () => {
   const [selected, setSelected] = useState(-1);
   const [loading, setLoading] = useState(false);
   const [topic, setTopic] = useState();
-  const [url, setUrl] = useState();
 
   function handleClick(type) {
     if (id === 1) navigate("/");
@@ -78,15 +140,16 @@ const StepsScreen = () => {
 
   function Step3Container() {
     const [videoLoading, setVideoLoading] = useState(true);
+    const [url, setUrl] = useState();
 
     useEffect(() => {
       const fun = async () => {
         try {
           const response = await axios.get(`${API_URL}run`, {
-            params: { topic: encodeURIComponent("what is ice cream") },
+            params: { topic: encodeURIComponent(topic) },
           });
           console.log(response, response.data.message);
-          setUrl('https://res.cloudinary.com/saiashish/raw/upload/v1653420255/asykl6bltpmp53uzhsay.mp4');
+          setUrl(response.data.message);
           setVideoLoading(false);
         } catch (e) {
           console.log(e);
@@ -108,72 +171,12 @@ const StepsScreen = () => {
     );
   }
 
-  function Step1Container() {
-    const inputRef = useRef();
-    const outputRef = useRef();
-    const [res, setRes] = useState();
-    function handleSubmit(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      console.log(inputRef.current.value);
-      setTopic(inputRef.current.value);
-      setLoading(true);
-      const API_KEY = "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";
-      const engine = "text-davinci-002";
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${API_KEY}`,
-        },
-        body: JSON.stringify({
-          prompt: inputRef.current.value,
-          temperature: 0,
-          max_tokens: 60,
-          top_p: 1,
-          n: 1,
-          stream: false,
-        }),
-      };
-      fetch(
-        `https://api.openai.com/v1/engines/${engine}/completions`,
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data.choices[0].text, outputRef);
-          // outputRef.current.value = data.choices[0].text;
-          setRes(data.choices[0].text);
-          setLoading(false);
-        })
-        .catch((e) => {
-          console.log(e);
-          setLoading(false);
-        });
-    }
-
-    return (
-      <Step3Cont>
-        <TextInput
-          placeholder="Write a 30 second long ad for Giani’s ice cream"
-          ref={inputRef}
-        />
-        <Button loading={loading} onClick={handleSubmit}>
-          {loading ? "Loading..." : "Create Content"}
-        </Button>
-        <Step1Label>
-          Want to change the Content? Feel free to edit it below!
-        </Step1Label>
-        <TextArea loading={loading} rows="5" ref={outputRef} value={res} />
-      </Step3Cont>
-    );
-  }
 
   return (
     <Container>
       <Step>STEP {id}</Step>
       <Title>{title[(id ?? 1) - 1]}</Title>
-      {id === 1 && <Step1Container />}
+      {id === 1 && <Step1Container loading={loading} setTopic={setTopic} setLoading={setLoading}/>}
       {/* {id === 2 && <ImgContainer />} */}
       {id === 2 && <Step3Container />}
       <NavigationCont>
@@ -181,9 +184,6 @@ const StepsScreen = () => {
         {id === 1 && (
           <Img src={ProceedImg} alt="img" onClick={() => handleClick("p")} />
         )}
-        {/* {id === 2 && selected !== -1 && (
-          <Img src={ProceedImg} alt="img" onClick={() => handleClick("p")} />
-        )} */}
         {id === 2 && (
           <DownloadImgCont
             src={DownloadImg}
@@ -197,3 +197,5 @@ const StepsScreen = () => {
 };
 
 export default StepsScreen;
+
+
