@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
 import {
   Container,
   Img,
@@ -29,7 +30,9 @@ import SpinnerImg from "assets/spinner.gif";
 import HighlightImg from "assets/highlight.png";
 import { Button } from "screens/HomeScreen/styles";
 
-import VideoSrc from "assets/video.mp4";
+import VideoSrc from "assets/result_voice.mp4";
+
+const API_URL = "http://4f68-35-247-29-231.ngrok.io/";
 
 const StepsScreen = () => {
   let { id } = useParams();
@@ -38,6 +41,8 @@ const StepsScreen = () => {
 
   const [selected, setSelected] = useState(-1);
   const [loading, setLoading] = useState(false);
+  const [topic, setTopic] = useState();
+  const [url, setUrl] = useState();
 
   function handleClick(type) {
     if (id === 1) navigate("/");
@@ -75,10 +80,19 @@ const StepsScreen = () => {
     const [videoLoading, setVideoLoading] = useState(true);
 
     useEffect(() => {
-      const interval = setTimeout(() => {
-        setVideoLoading((l) => !l);
-      }, 4000);
-      return () => clearTimeout(interval);
+      const fun = async () => {
+        try {
+          const response = await axios.get(`${API_URL}run`, {
+            params: { topic: encodeURIComponent("what is ice cream") },
+          });
+          console.log(response, response.data.message);
+          setUrl('https://res.cloudinary.com/saiashish/raw/upload/v1653420255/asykl6bltpmp53uzhsay.mp4');
+          setVideoLoading(false);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      fun();
     }, []);
 
     return (
@@ -86,8 +100,8 @@ const StepsScreen = () => {
         {videoLoading ? (
           <SpinnerImgCont src={SpinnerImg} alt="img" />
         ) : (
-          <VideoCont height="100%" width="100%" autoPlay muted={false}>
-            <source src={VideoSrc} type="video/mp4" />
+          <VideoCont height="100%" width="100%" autoPlay loop muted={false} controls>
+            <source src={url} type="video/mp4" />
           </VideoCont>
         )}
       </Step3ImgCont>
@@ -97,13 +111,14 @@ const StepsScreen = () => {
   function Step1Container() {
     const inputRef = useRef();
     const outputRef = useRef();
-
+    const [res, setRes] = useState();
     function handleSubmit(e) {
       e.preventDefault();
       e.stopPropagation();
       console.log(inputRef.current.value);
+      setTopic(inputRef.current.value);
       setLoading(true);
-      const API_KEY = "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";
+      const API_KEY = "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";
       const engine = "text-davinci-002";
       const requestOptions = {
         method: "POST",
@@ -127,7 +142,8 @@ const StepsScreen = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log(data.choices[0].text, outputRef);
-          outputRef.current.value = data.choices[0].text;
+          // outputRef.current.value = data.choices[0].text;
+          setRes(data.choices[0].text);
           setLoading(false);
         })
         .catch((e) => {
@@ -148,7 +164,7 @@ const StepsScreen = () => {
         <Step1Label>
           Want to change the Content? Feel free to edit it below!
         </Step1Label>
-        <TextArea loading={loading} rows="5" ref={outputRef} />
+        <TextArea loading={loading} rows="5" ref={outputRef} value={res} />
       </Step3Cont>
     );
   }
