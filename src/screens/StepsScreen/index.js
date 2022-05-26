@@ -30,9 +30,7 @@ import SpinnerImg from "assets/spinner.gif";
 import HighlightImg from "assets/highlight.png";
 import { Button } from "screens/HomeScreen/styles";
 
-import VideoSrc from "assets/result_voice.mp4";
-
-const API_URL = "http://0354-35-247-29-231.ngrok.io/";
+const API_URL = "";
 
 function Step1Container({loading, setTopic, setLoading}) {
   const inputRef = useRef();
@@ -115,7 +113,7 @@ const StepsScreen = () => {
 
   const title = [
     "Please Enter the Topic of your Advertisement",
-    "Choose the Video Clip for your Advertisement",
+    "Download your Video Advertisement",
     "Download your Video Advertisement",
   ];
 
